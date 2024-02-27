@@ -368,9 +368,9 @@ const jupyterlab_theme = Blockly.Theme.defineTheme('jupyterlab', {
     scrollbarOpacity: 0.4,
     cursorColour: 'var(--jp-scrollbar-background-color)'
   },
-  fontStyle: {
-    family: 'var(--jp-ui-font-family)'
-  }
+  // fontStyle: {
+  //   family: 'var(--jp-ui-font-family)'
+  // }
 });
 
 export const THEME: Blockly.Theme = jupyterlab_theme;
