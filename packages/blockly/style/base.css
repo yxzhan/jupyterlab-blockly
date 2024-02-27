@@ -13,3 +13,7 @@
 .jp-blockly-codeCell {
   overflow: scroll;
 }
+
+button.jp-ToolbarButtonComponent span {
+  vertical-align: middle;
+}

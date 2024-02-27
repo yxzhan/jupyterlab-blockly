@@ -5,3 +5,5 @@ export * from './registry';
 export * from './token';
 export * from './utils';
 export * from './widget';
+
+import '../style/index.css'

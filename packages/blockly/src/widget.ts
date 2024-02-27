@@ -4,7 +4,11 @@ import {
   DocumentModel
 } from '@jupyterlab/docregistry';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
-import { runIcon } from '@jupyterlab/ui-components';
+import { 
+  runIcon,
+  stopIcon,
+  refreshIcon,
+} from '@jupyterlab/ui-components';
 
 import { SplitPanel } from '@lumino/widgets';
 import { Signal } from '@lumino/signaling';
@@ -33,14 +37,42 @@ export class BlocklyEditor extends DocumentWidget<BlocklyPanel, DocumentModel> {
 
     // Create and add a button to the toolbar to execute
     // the code.
-    const button = new BlocklyButton({
-      label: '',
+    const runButton = new BlocklyButton({
+      label: 'Run Code',
       icon: runIcon,
       className: 'jp-blockly-runButton',
       onClick: () => (this.content.layout as BlocklyLayout).run(),
       tooltip: 'Run Code'
     });
-    this.toolbar.addItem('run', button);
+    const stopButton = new BlocklyButton({
+      label: 'Stop Code',
+      icon: stopIcon,
+      className: 'jp-blockly-runButton',
+      onClick: () => {
+        const kernel = this.context.sessionContext.session?.kernel;
+        if (kernel) {
+          return kernel.interrupt();
+        }
+        return Promise.resolve(void 0);
+      },
+      tooltip: 'Stop Code'
+    });
+    const restartButton = new BlocklyButton({
+      label: 'Restart the kernel',
+      icon: refreshIcon,
+      className: 'jp-blockly-runButton',
+      onClick: () => {
+        const kernel = this.context.sessionContext.session?.kernel;
+        if (kernel) {
+          return kernel.restart();
+        }
+        return Promise.resolve(void 0);
+      },
+      tooltip: 'Restart the kernel'
+    });
+    this.toolbar.addItem('run', runButton);
+    this.toolbar.addItem('stop', stopButton);
+    this.toolbar.addItem('restart', restartButton);
     this.toolbar.addItem('spacer', new Spacer());
     this.toolbar.addItem(
       'toolbox',
