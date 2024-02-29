@@ -12,6 +12,16 @@ import * as Blockly from 'blockly';
 import { BlocklyManager } from './manager';
 import { THEME } from './utils';
 
+import { PositionedMinimap } from '@blockly/workspace-minimap';
+import { CrossTabCopyPaste } from '@blockly/plugin-cross-tab-copy-paste';
+
+// init the cross tab copy paste plugin
+const crossTabCp = new CrossTabCopyPaste();
+crossTabCp.init({
+  contextMenu: true,
+  shortcut: true,
+});
+
 /**
  * A blockly layout to host the Blockly editor.
  */
@@ -212,8 +222,23 @@ export class BlocklyLayout extends SplitLayout {
     //inject Blockly with appropiate JupyterLab theme.
     this._workspace = Blockly.inject(this._host.node, {
       toolbox: this._manager.toolbox,
-      theme: THEME
+      theme: THEME,
+      zoom:
+      {
+        // controls: true,
+        wheel: true,
+        startScale: 1.0,
+        maxScale: 3,
+        minScale: 0.3,
+        scaleSpeed: 1.2,
+        pinch: true
+      },
+      trashcan: true
     });
+
+    // Init plugins
+    const minimap = new PositionedMinimap(this._workspace);
+    minimap.init();
 
     this._workspace.addChangeListener(() => {
       // Get extra code from the blocks in the workspace.

@@ -37,6 +37,8 @@
     "install:extension": "jlpm build"
   },
   "dependencies": {
+    "@blockly/plugin-cross-tab-copy-paste": "^5.0.6",
+    "@blockly/workspace-minimap": "^0.1.14",
     "@jupyterlab/apputils": "^3.6",
     "@jupyterlab/cells": "^3.6",
     "@jupyterlab/codeeditor": "^3.6",
