@@ -348,22 +348,7 @@ export const TOOLBOX = {
       colour: '290',
       custom: 'PROCEDURE',
       name: 'Functions'
-    },
-    {
-      kind: 'SEP'
-    },
-    {
-      kind: 'category',
-      name: 'Frequently Used',
-      custom: 'MOST_USED',
-      categorystyle: 'frequently_used_category',
-    },
-    {
-      kind: 'category',
-      name: 'Recently Used',
-      custom: 'RECENTLY_USED',
-      categorystyle: 'recently_used_category',
-    },
+    }
   ]
 };
 
