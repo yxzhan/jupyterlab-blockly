@@ -212,7 +212,17 @@ export class BlocklyLayout extends SplitLayout {
     //inject Blockly with appropiate JupyterLab theme.
     this._workspace = Blockly.inject(this._host.node, {
       toolbox: this._manager.toolbox,
-      theme: THEME
+      theme: THEME,
+      zoom: {
+        controls: true,
+        wheel: true,
+        startScale: 1.0,
+        maxScale: 3,
+        minScale: 0.3,
+        scaleSpeed: 1.1,
+        pinch: true
+      },
+      trashcan: true
     });
 
     this._workspace.addChangeListener(() => {
