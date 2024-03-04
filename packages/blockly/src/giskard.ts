@@ -1,6 +1,8 @@
 import * as Blockly from 'blockly';
 import { pythonGenerator as BlocklyPy } from 'blockly/python';
 
+BlocklyPy.INDENT  = '    ';
+
 const giskard_colors = [
   "#FF5733", // Orange
   "#34A853", // Green
