@@ -1,5 +1,7 @@
 import * as Blockly from 'blockly';
 
+import GISKARD_CATEGORY from './giskard';
+
 // Creating a toolbox containing all the main (default) blocks.
 export const TOOLBOX = {
   kind: 'categoryToolbox',
@@ -348,7 +350,8 @@ export const TOOLBOX = {
       colour: '290',
       custom: 'PROCEDURE',
       name: 'Functions'
-    }
+    },
+    GISKARD_CATEGORY
   ]
 };
 
