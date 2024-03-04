@@ -41,6 +41,7 @@ const GISKARD_BLOCKS = [
     toplevel_init: [
       `import rospy`,
       `from geometry_msgs.msg import PoseStamped, Point, Quaternion, Vector3Stamped, PointStamped, QuaternionStamped`,
+      `import utils`,
       `from utils import launch_robot, move_robot, get_controlled_joints, get_links, add_joint_position, add_cartesian_pose, cmd_vel_move, cmd_vel_turn`,
     ].join('\n') + '\n\n'
   },
@@ -228,18 +229,18 @@ const GISKARD_BLOCKS = [
     block_init: function() {
       
       this.appendValueInput('TIP_LINK')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('Cartesian pose motion goal with: tip_link');
       this.appendValueInput('ROOT_LINK')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('root_link');
       this.appendValueInput('POSITION')
         .setCheck('Point')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('position');
       this.appendValueInput('ORIENTATION')
         .setCheck('Quaternion')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('orientation');
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
@@ -303,6 +304,24 @@ const GISKARD_BLOCKS = [
     }
   },
   {
+    id: 'giskard_joint_trajectory_controller',
+    block_init: function() {
+      this.appendDummyInput('')
+        .appendField('Display joint trajectory controller');
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(giskard_colors[7])
+      this.setTooltip(
+        'Display joint_trajectory_controller'
+      );
+      this.setHelpUrl('');
+    },
+    generator: (block) => {
+      let code = "utils.display_joint_trajectory_controller()";
+      return code + '\n';
+    }
+  },
+  {
     id: 'giskard_get_controlled_joints',
     block_init: function() {
       this.appendDummyInput()
@@ -341,15 +360,15 @@ const GISKARD_BLOCKS = [
     block_init: function() {
       this.appendValueInput('X')
         .setCheck('Number')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('Point x')
       this.appendValueInput('Y')
         .setCheck('Number')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('y');
       this.appendValueInput('Z')
         .setCheck('Number')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('z');
       this.setOutput(true, 'Point');
       this.setColour(giskard_colors[4])
@@ -369,19 +388,19 @@ const GISKARD_BLOCKS = [
     block_init: function() {
       this.appendValueInput('X')
         .setCheck('Number')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('Quaternion x')
       this.appendValueInput('Y')
         .setCheck('Number')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('y');
       this.appendValueInput('Z')
         .setCheck('Number')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('z');
       this.appendValueInput('W')
         .setCheck('Number')
-        .setAlign(Blockly.ALIGN_RIGHT)
+        .setAlign(Blockly.inputs.Align.RIGHT)
         .appendField('w');
       this.setOutput(true, 'Quaternion');
       this.setColour(giskard_colors[4])
@@ -396,6 +415,23 @@ const GISKARD_BLOCKS = [
       let code = `Quaternion(${value_x}, ${value_y}, ${value_z}, ${value_w})`;
       // return code;
       return [code, BlocklyPy.ORDER_ATOMIC];
+    }
+  },
+  {
+    id: 'arbitrary_code',
+    block_init: function() {
+      this.appendDummyInput()
+        .appendField("Arbitrary python code")
+        .appendField(new Blockly.FieldMultilineInput('# ========= Embed code ========= # \n\n\n\n\n# ========= End ========= #'),
+            'PYTHON_CODE');
+      this.setPreviousStatement(true, null)
+      this.setNextStatement(true, null)
+      this.setColour(giskard_colors[8])
+      this.setTooltip('Embed arbitrary python code, for testing.')
+    },
+    generator: (block) => {
+      let code = block.getFieldValue('PYTHON_CODE')
+      return code + '\n';
     }
   }
 ]

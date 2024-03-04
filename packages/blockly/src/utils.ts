@@ -351,6 +351,9 @@ export const TOOLBOX = {
       custom: 'PROCEDURE',
       name: 'Functions'
     },
+    {
+      kind: 'SEP'
+    },
     GISKARD_CATEGORY
   ]
 };
