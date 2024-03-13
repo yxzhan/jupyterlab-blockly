@@ -54,6 +54,9 @@ export class BlocklyEditorFactory extends ABCWidgetFactory<
       context.sessionContext,
       this._mimetypeService
     );
+    // Select the first kernel available
+    const defaultKernel = context.sessionContext.specsManager.specs.default
+    manager.selectKernel(defaultKernel)
     const content = new BlocklyPanel(context, manager, this._rendermime);
     return new BlocklyEditor({ context, content, manager });
   }

@@ -105,7 +105,7 @@ const plugin: JupyterFrontEndPlugin<IBlocklyRegistry> = {
       // that reason, we tell the widget factory to start a kernel session
       // when opening the editor, and close the session when closing the editor.
       canStartKernel: true,
-      preferKernel: true,
+      preferKernel: false,
       shutdownOnClose: true,
 
       // The rendermime instance, necessary to render the outputs
