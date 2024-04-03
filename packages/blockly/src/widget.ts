@@ -7,6 +7,7 @@ import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import { 
   runIcon,
   stopIcon,
+  codeIcon,
   refreshIcon,
 } from '@jupyterlab/ui-components';
 
@@ -47,7 +48,6 @@ export class BlocklyEditor extends DocumentWidget<BlocklyPanel, DocumentModel> {
     const stopButton = new BlocklyButton({
       label: 'Stop Code',
       icon: stopIcon,
-      className: 'jp-blockly-runButton',
       onClick: () => {
         const kernel = this.context.sessionContext.session?.kernel;
         if (kernel) {
@@ -60,7 +60,6 @@ export class BlocklyEditor extends DocumentWidget<BlocklyPanel, DocumentModel> {
     const restartButton = new BlocklyButton({
       label: 'Restart the kernel',
       icon: refreshIcon,
-      className: 'jp-blockly-runButton',
       onClick: () => {
         const kernel = this.context.sessionContext.session?.kernel;
         if (kernel) {
@@ -70,15 +69,27 @@ export class BlocklyEditor extends DocumentWidget<BlocklyPanel, DocumentModel> {
       },
       tooltip: 'Restart the kernel'
     });
+    // Hide the source code by default
+    options.content.setRelativeSizes([1,0])
+    const toggleCodeButton = new BlocklyButton({
+      label: 'Show Code',
+      icon: codeIcon,
+      onClick: () => {
+        const isHidden = options.content.relativeSizes()[1] === 0 ? 1 : 0;
+        options.content.setRelativeSizes(isHidden ? [0.5, 0.5] : [1, 0])
+      },
+      tooltip: 'Show or hide source code'
+    });
     this.toolbar.addItem('run', runButton);
     this.toolbar.addItem('stop', stopButton);
     this.toolbar.addItem('restart', restartButton);
+    this.toolbar.addItem('toggleCode', toggleCodeButton);
     this.toolbar.addItem('spacer', new Spacer());
     this.toolbar.addItem(
       'toolbox',
       new SelectToolbox({
         label: 'Toolbox',
-        tooltip: 'Select tollbox',
+        tooltip: 'Select toolbox',
         manager: options.manager
       })
     );

@@ -1,13 +1,19 @@
-.jp-blockly-button:hover {
-  background-color: transparent !important;
-}
-
-.jp-blockly-runButton {
+/* Make the run button more obvious */
+button.jp-Button.jp-ToolbarButtonComponent.jp-blockly-runButton {
   background-color: var(--md-green-500);
 }
 
-.jp-blockly-runButton:hover {
+button.jp-Button.jp-ToolbarButtonComponent.jp-blockly-runButton:hover {
   background-color: var(--md-green-700);
+}
+
+button.jp-Button.jp-ToolbarButtonComponent.jp-blockly-runButton .jp-ToolbarButtonComponent-label {
+  color: #fff;
+  font-weight: bold;
+}
+
+button.jp-Button.jp-ToolbarButtonComponent.jp-blockly-runButton .jp-icon3[fill] {
+  fill: #fff;
 }
 
 .jp-blockly-codeCell {
