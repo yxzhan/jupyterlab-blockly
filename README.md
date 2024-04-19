@@ -76,6 +76,13 @@ jlpm watch
 jupyter lab
 ```
 
+## Package extension
+
+```bash
+pip install build
+python -m build -s
+```
+
 With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).
 
 By default, the `jlpm build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:
