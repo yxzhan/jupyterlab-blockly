@@ -44,40 +44,40 @@ const GISKARD_BLOCKS = [
       `import rospy`,
       `from geometry_msgs.msg import PoseStamped, Point, Quaternion, Vector3Stamped, PointStamped, QuaternionStamped`,
       `import utils`,
-      `from utils import launch_robot, move_robot, get_controlled_joints, get_links, add_joint_position, add_cartesian_pose, cmd_vel_move, cmd_vel_turn`,
+      `from utils import *`,
     ].join('\n') + '\n\n'
   },
-  {
-    // unique id of a type of block
-    id: 'giskard_start',
-    // Function defines how the block will look like, the inputs, the fields, etc.
-    // Docs: https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks#javascript_2
-    block_init: function() {
-      this.appendValueInput('ROBOT')
-        .setCheck('String')
-        .appendField('Start robot')
-      this.appendValueInput('ENV')
-        .setCheck('String')
-        .appendField('in')
-      this.appendValueInput('RESTART')
-        .setCheck('Boolean')
-        .appendField(', and always restart:')
-      this.setPreviousStatement(true, null)
-      this.setNextStatement(true, null)
-      this.setInputsInline(true)
-      this.setColour(giskard_colors[0])
-      this.setTooltip('Start a robot simulator.')
-      this.setHelpUrl('')
-    },
-    // The python code generator for the block
-    generator: (block) => {
-      let value_robot = BlocklyPy.valueToCode(block, 'ROBOT', BlocklyPy.ORDER_ATOMIC);
-      let value_env = BlocklyPy.valueToCode(block, 'ENV', BlocklyPy.ORDER_ATOMIC);
-      let value_reset = BlocklyPy.valueToCode(block, 'RESTART', BlocklyPy.ORDER_ATOMIC);
-      let code = `launch_robot(${value_robot}, sim_env=${value_env}, restart=${value_reset})`
-      return code + '\n';
-    },
-  },
+  // {
+  //   // unique id of a type of block
+  //   id: 'giskard_start',
+  //   // Function defines how the block will look like, the inputs, the fields, etc.
+  //   // Docs: https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks#javascript_2
+  //   block_init: function() {
+  //     this.appendValueInput('ROBOT')
+  //       .setCheck('String')
+  //       .appendField('Start robot')
+  //     this.appendValueInput('ENV')
+  //       .setCheck('String')
+  //       .appendField('in')
+  //     this.appendValueInput('RESTART')
+  //       .setCheck('Boolean')
+  //       .appendField(', and always restart:')
+  //     this.setPreviousStatement(true, null)
+  //     this.setNextStatement(true, null)
+  //     this.setInputsInline(true)
+  //     this.setColour(giskard_colors[0])
+  //     this.setTooltip('Start a robot simulator.')
+  //     this.setHelpUrl('')
+  //   },
+  //   // The python code generator for the block
+  //   generator: (block) => {
+  //     let value_robot = BlocklyPy.valueToCode(block, 'ROBOT', BlocklyPy.ORDER_ATOMIC);
+  //     let value_env = BlocklyPy.valueToCode(block, 'ENV', BlocklyPy.ORDER_ATOMIC);
+  //     let value_reset = BlocklyPy.valueToCode(block, 'RESTART', BlocklyPy.ORDER_ATOMIC);
+  //     let code = `launch_robot(${value_robot}, sim_env=${value_env}, restart=${value_reset})`
+  //     return code + '\n';
+  //   },
+  // },
   {
     id: 'giskard_sleep',
     block_init: function() {
@@ -222,7 +222,7 @@ const GISKARD_BLOCKS = [
     },
     generator: (block) => {
       let value_pos = BlocklyPy.valueToCode(block, 'POSITION', BlocklyPy.ORDER_ATOMIC);
-      let code = `move_robot(${value_pos})`;
+      let code = `add_cartesian_position(${value_pos})`;
       return code + '\n';
     }
   },
