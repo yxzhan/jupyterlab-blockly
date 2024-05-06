@@ -42,7 +42,7 @@ const GISKARD_BLOCKS = [
     // The python top-level code, for example import libraries
     toplevel_init: [
       `import rospy`,
-      `from geometry_msgs.msg import, Point, Quaternion`,
+      `from geometry_msgs.msg import Point, Quaternion`,
       `from utils import *`,
     ].join('\n') + '\n\n'
   },
