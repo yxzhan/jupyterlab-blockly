@@ -42,44 +42,12 @@ const GISKARD_BLOCKS = [
     // The python top-level code, for example import libraries
     toplevel_init: [
       `import rospy`,
-      `from geometry_msgs.msg import PoseStamped, Point, Quaternion, Vector3Stamped, PointStamped, QuaternionStamped`,
-      `import utils`,
+      `from geometry_msgs.msg import, Point, Quaternion`,
       `from utils import *`,
     ].join('\n') + '\n\n'
   },
-  // {
-  //   // unique id of a type of block
-  //   id: 'giskard_start',
-  //   // Function defines how the block will look like, the inputs, the fields, etc.
-  //   // Docs: https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks#javascript_2
-  //   block_init: function() {
-  //     this.appendValueInput('ROBOT')
-  //       .setCheck('String')
-  //       .appendField('Start robot')
-  //     this.appendValueInput('ENV')
-  //       .setCheck('String')
-  //       .appendField('in')
-  //     this.appendValueInput('RESTART')
-  //       .setCheck('Boolean')
-  //       .appendField(', and always restart:')
-  //     this.setPreviousStatement(true, null)
-  //     this.setNextStatement(true, null)
-  //     this.setInputsInline(true)
-  //     this.setColour(giskard_colors[0])
-  //     this.setTooltip('Start a robot simulator.')
-  //     this.setHelpUrl('')
-  //   },
-  //   // The python code generator for the block
-  //   generator: (block) => {
-  //     let value_robot = BlocklyPy.valueToCode(block, 'ROBOT', BlocklyPy.ORDER_ATOMIC);
-  //     let value_env = BlocklyPy.valueToCode(block, 'ENV', BlocklyPy.ORDER_ATOMIC);
-  //     let value_reset = BlocklyPy.valueToCode(block, 'RESTART', BlocklyPy.ORDER_ATOMIC);
-  //     let code = `launch_robot(${value_robot}, sim_env=${value_env}, restart=${value_reset})`
-  //     return code + '\n';
-  //   },
-  // },
   {
-    id: 'giskard_sleep',
+    id: 'rospy_sleep',
     block_init: function() {
       this.appendValueInput('TIME')
         .setCheck('Number')
@@ -100,178 +68,15 @@ const GISKARD_BLOCKS = [
     }
   },
   {
-    id: 'giskard_forward',
-    block_init: function() {
-      this.appendValueInput('SPEED')
-        .setCheck('Number')
-        .appendField('Move forward with speed');
-      this.appendValueInput('TIME')
-        .setCheck('Number')
-        .appendField('m/s for');
-      this.appendDummyInput()
-        .appendField('seconds.');
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(giskard_colors[3])
-      this.setTooltip(
-        'Move forward with a certain speed for a chosen no. of seconds.'
-      );
-      this.setHelpUrl('');
-    },
-    generator: (block) => {
-      let value_speed = BlocklyPy.valueToCode(block, 'SPEED', BlocklyPy.ORDER_ATOMIC);
-      let value_time = BlocklyPy.valueToCode(block, 'TIME', BlocklyPy.ORDER_ATOMIC);
-      let code = `cmd_vel_move(${value_speed}, ${value_time})`;
-      return code + '\n';
-    }
-  },
-  {
-    id: 'giskard_backward',
-    block_init: function() {
-      this.appendValueInput('SPEED')
-        .setCheck('Number')
-        .appendField('Move backward with speed');
-      this.appendValueInput('TIME')
-        .setCheck('Number')
-        .appendField('m/s for');
-      this.appendDummyInput()
-        .appendField('seconds.');
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(giskard_colors[3])
-      this.setTooltip(
-        'Move backward with a certain speed for a chosen no. of seconds.'
-      );
-      this.setHelpUrl('');
-    },
-    generator: (block) => {
-      let value_speed = BlocklyPy.valueToCode(block, 'SPEED', BlocklyPy.ORDER_ATOMIC);
-      let value_time = BlocklyPy.valueToCode(block, 'TIME', BlocklyPy.ORDER_ATOMIC);
-      let code = `cmd_vel_move(-${value_speed}, ${value_time})`;
-      return code + '\n';
-    }
-  },
-  {
-    id: 'giskard_turn_left',
-    block_init: function() {
-      this.appendValueInput('SPEED')
-        .setCheck('Number')
-        .appendField('Turn left with speed');
-      this.appendValueInput('TIME')
-        .setCheck('Number')
-        .appendField('for');
-      this.appendDummyInput().appendField('seconds');
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(giskard_colors[4])
-      this.setTooltip(
-        'Turn left with a certain speed for a chosen no. of seconds.'
-      );
-      this.setHelpUrl('');
-    },
-    generator: (block) => {
-      let value_speed = BlocklyPy.valueToCode(block, 'SPEED', BlocklyPy.ORDER_ATOMIC);
-      let value_time = BlocklyPy.valueToCode(block, 'TIME', BlocklyPy.ORDER_ATOMIC);
-      let code = `cmd_vel_turn(${value_speed}, ${value_time})`;
-      return code + '\n';
-    }
-  },
-  {
-    id: 'giskard_turn_right',
-    block_init: function() {
-      this.appendValueInput('SPEED')
-        .setCheck('Number')
-        .appendField('Turn right with speed');
-      this.appendValueInput('TIME')
-        .setCheck('Number')
-        .appendField('for');
-      this.appendDummyInput().appendField('seconds');
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(giskard_colors[4])
-      this.setTooltip(
-        'Turn right with a certain speed for a chosen no. of seconds.'
-      );
-      this.setHelpUrl('');
-    },
-    generator: (block) => {
-      let value_speed = BlocklyPy.valueToCode(block, 'SPEED', BlocklyPy.ORDER_ATOMIC);
-      let value_time = BlocklyPy.valueToCode(block, 'TIME', BlocklyPy.ORDER_ATOMIC);
-      let code = `cmd_vel_turn(-${value_speed}, ${value_time})`;
-      return code + '\n';
-    }
-  },
-  {
-    id: 'giskard_moveto',
-    block_init: function() {
-      this.appendValueInput('POSITION')
-        .setCheck('Point')
-        .appendField('Move robot to');
-      this.setInputsInline(false);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(giskard_colors[2])
-      this.setTooltip(
-        'Move robot to postion (X, Y, Z).'
-      );
-      this.setHelpUrl('');
-    },
-    generator: (block) => {
-      let value_pos = BlocklyPy.valueToCode(block, 'POSITION', BlocklyPy.ORDER_ATOMIC);
-      let code = `add_cartesian_position(${value_pos})`;
-      return code + '\n';
-    }
-  },
-  {
-    id: 'giskard_motion_goals_add_cartesian_pose',
-    block_init: function() {
-      
-      this.appendValueInput('TIP_LINK')
-        .setAlign(Blockly.inputs.Align.RIGHT)
-        .appendField('Cartesian pose motion goal with: tip_link');
-      this.appendValueInput('ROOT_LINK')
-        .setAlign(Blockly.inputs.Align.RIGHT)
-        .appendField('root_link');
-      this.appendValueInput('POSITION')
-        .setCheck('Point')
-        .setAlign(Blockly.inputs.Align.RIGHT)
-        .appendField('position');
-      this.appendValueInput('ORIENTATION')
-        .setCheck('Quaternion')
-        .setAlign(Blockly.inputs.Align.RIGHT)
-        .appendField('orientation');
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setInputsInline(false);
-      this.setColour(giskard_colors[2])
-      this.setTooltip(
-        'Giskard api: giskard_wrapper.motion_goals.add_cartesian_position'
-      );
-      this.setHelpUrl('');
-    },
-    generator: (block) => {
-      let value_tip_link = BlocklyPy.valueToCode(block, 'TIP_LINK', BlocklyPy.ORDER_ATOMIC) || "'base_link'";
-      let value_root_link = BlocklyPy.valueToCode(block, 'ROOT_LINK', BlocklyPy.ORDER_ATOMIC) || "'map'";
-      let value_pos = BlocklyPy.valueToCode(block, 'POSITION', BlocklyPy.ORDER_ATOMIC) || 'None';
-      let value_ori = BlocklyPy.valueToCode(block, 'ORIENTATION', BlocklyPy.ORDER_ATOMIC) || 'None';
-      let code = `add_cartesian_pose(${value_pos}, ${value_ori}, root_link=${value_root_link}, tip_link=${value_tip_link})`;
-      return code + '\n';
-    }
-  },
-  {
     id: 'giskard_motion_goals_add_joint_position',
     block_init: function() {
       this.appendValueInput('JOINT_LIST')
         .setCheck('Array')
-        .appendField('Set joint position');
+        .appendField('Add joint position motion goal with:');
       this.setInputsInline(false);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(giskard_colors[2])
+      this.setColour(giskard_colors[9])
       this.setTooltip(
         'Giskard api: giskard_wrapper.motion_goals.add_joint_position'
       );
@@ -306,55 +111,44 @@ const GISKARD_BLOCKS = [
     }
   },
   {
-    id: 'giskard_joint_trajectory_controller',
+    id: 'giskard_motion_goals_add_cartesian_pose',
     block_init: function() {
       this.appendDummyInput('')
-        .appendField('Display joint trajectory controller');
+        .appendField('Add cartesian pose motion goal with:');
+      this.appendValueInput('TIP_LINK')
+        .setAlign(Blockly.inputs.Align.RIGHT)
+        .appendField('tip_link');
+      this.appendValueInput('ROOT_LINK')
+        .setAlign(Blockly.inputs.Align.RIGHT)
+        .appendField('root_link');
+      this.appendValueInput('FRAME_ID')
+        .setAlign(Blockly.inputs.Align.RIGHT)
+        .appendField('frame_id');
+      this.appendValueInput('POSITION')
+        .setCheck('Point')
+        .setAlign(Blockly.inputs.Align.RIGHT)
+        .appendField('position');
+      this.appendValueInput('ORIENTATION')
+        .setCheck('Quaternion')
+        .setAlign(Blockly.inputs.Align.RIGHT)
+        .appendField('orientation');
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(giskard_colors[7])
+      this.setInputsInline(false);
+      this.setColour(giskard_colors[9])
       this.setTooltip(
-        'Display joint_trajectory_controller'
+        'Giskard api: giskard_wrapper.motion_goals.add_cartesian_position'
       );
       this.setHelpUrl('');
     },
     generator: (block) => {
-      let code = "utils.display_joint_trajectory_controller()";
+      let value_tip_link = BlocklyPy.valueToCode(block, 'TIP_LINK', BlocklyPy.ORDER_ATOMIC) || "'base_link'";
+      let value_root_link = BlocklyPy.valueToCode(block, 'ROOT_LINK', BlocklyPy.ORDER_ATOMIC) || "'map'";
+      let value_frame_id = BlocklyPy.valueToCode(block, 'FRAME_ID', BlocklyPy.ORDER_ATOMIC) || "'base_link'";
+      let value_pos = BlocklyPy.valueToCode(block, 'POSITION', BlocklyPy.ORDER_ATOMIC) || 'None';
+      let value_ori = BlocklyPy.valueToCode(block, 'ORIENTATION', BlocklyPy.ORDER_ATOMIC) || 'None';
+      let code = `add_cartesian_pose(${value_pos}, ${value_ori}, root_link=${value_root_link}, tip_link=${value_tip_link}, frame_id=${value_frame_id})`;
       return code + '\n';
-    }
-  },
-  {
-    id: 'giskard_get_controlled_joints',
-    block_init: function() {
-      this.appendDummyInput()
-        .appendField('Robot controlled joints');
-      this.setColour(giskard_colors[3])
-      this.setOutput(true, 'List');
-      this.setTooltip(
-        'Get robot controlled joints.'
-      );
-      this.setHelpUrl('');
-    },
-    generator: (block) => {
-      let code = "get_controlled_joints()";
-      return [code, BlocklyPy.ORDER_ATOMIC];
-    }
-  },
-  {
-    id: 'giskard_get_links',
-    block_init: function() {
-      this.appendDummyInput()
-        .appendField('Robot links');
-      this.setColour(giskard_colors[3])
-      this.setOutput(true, 'List');
-      this.setTooltip(
-        'Get robot links.'
-      );
-      this.setHelpUrl('');
-    },
-    generator: (block) => {
-      let code = "get_links()";
-      return [code, BlocklyPy.ORDER_ATOMIC];
     }
   },
   {
@@ -417,6 +211,24 @@ const GISKARD_BLOCKS = [
       let code = `Quaternion(${value_x}, ${value_y}, ${value_z}, ${value_w})`;
       // return code;
       return [code, BlocklyPy.ORDER_ATOMIC];
+    }
+  },
+  {
+    id: 'giskard_joint_trajectory_controller',
+    block_init: function() {
+      this.appendDummyInput('')
+        .appendField('Display joint trajectory controller');
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(giskard_colors[7])
+      this.setTooltip(
+        'Display joint_trajectory_controller'
+      );
+      this.setHelpUrl('');
+    },
+    generator: (block) => {
+      let code = "display_joint_trajectory_controller()";
+      return code + '\n';
     }
   },
   {
