@@ -64,7 +64,7 @@ skip-if-exists = ["jupyterlab_blockly/labextension/static/style.js"]
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 npm = ["jlpm"]
 build_cmd = "build:prod"
-editable_build_cmd = "install:extension"
+editable_build_cmd = "install"
 
 [tool.jupyter-releaser.options]
 version-cmd = "python scripts/bump-version.py --force"
